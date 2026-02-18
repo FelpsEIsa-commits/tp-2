@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Liderança — TP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="main-container">
+    <h1>Painel de Liderança</h1>
+    <p>Identifique-se para acessar o painel.</p>
+    <!-- Authentication container: register and login -->
+    <div id="login-container" class="admin-form">
+      <div class="form-group">
+        <label for="name-input">Nome:</label>
+        <input type="text" id="name-input" placeholder="Seu nome" required>
+      </div>
+      <div class="form-group">
+        <label for="password-input">Senha:</label>
+        <input type="password" id="password-input" placeholder="Digite a senha" required>
+      </div>
+      <div class="auth-buttons">
+        <button id="login-btn" class="submit-btn">Entrar</button>
+        <button id="register-btn" class="submit-btn">Registrar</button>
+      </div>
+      <p id="login-message" class="admin-message"></p>
+    </div>
+    <!-- Content for authenticated users -->
+    <div id="admin-content" style="display:none;">
+      <!-- Menu -->
+      <div class="admin-menu">
+        <button class="menu-btn active" data-section="carteira">Carteira</button>
+        <button class="menu-btn" data-section="equipe">Equipe</button>
+        <button class="menu-btn" data-section="participantes">Participantes</button>
+        <button class="menu-btn" data-section="relatorios">Relatórios</button>
+        <button class="menu-btn" data-section="configuracoes">Configurações</button>
+        <button class="menu-btn" data-section="logs">Logs</button>
+      </div>
+      <!-- Carteira section -->
+      <div id="carteira-section" class="admin-section">
+        <h2>Carteira</h2>
+        <p>Adicione valores individuais para cada membro.</p>
+        <div class="admin-form">
+          <div class="form-group">
+            <label for="user">Nome do membro:</label>
+            <input type="text" id="user" name="user" required placeholder="Ex: Esther">
+          </div>
+          <div class="form-group">
+            <label for="value">Valor (R$):</label>
+            <input type="number" step="0.01" id="value" name="value" required placeholder="Ex: 100">
+          </div>
+          <button id="submit-btn" class="submit-btn">Adicionar Entrada</button>
+          <p id="admin-message" class="admin-message"></p>
+        </div>
+      </div>
+      <!-- Equipe section -->
+      <div id="equipe-section" class="admin-section" style="display:none;">
+        <h2>Equipe</h2>
+        <p>Gerencie os membros da equipe: edite ou adicione novas pessoas.</p>
+        <div id="team-admin-container"></div>
+        <div class="team-add-form admin-form">
+          <h3>Adicionar novo membro</h3>
+          <div class="form-group">
+            <label for="new-name">Nome:</label>
+            <input type="text" id="new-name" placeholder="Nome do novo membro">
+          </div>
+          <div class="form-group">
+            <label for="new-desc">Descrição:</label>
+            <input type="text" id="new-desc" placeholder="Descrição ou cargo">
+          </div>
+          <button id="add-member-btn" class="submit-btn">Adicionar</button>
+          <p id="team-message" class="admin-message"></p>
+        </div>
+      </div>
+
+      <!-- Relatórios section -->
+      <div id="relatorios-section" class="admin-section" style="display:none;">
+        <h2>Relatórios</h2>
+        <p>Resumo das entradas e ranking por membro. Os dados atualizam em tempo real.</p>
+        <div class="report-container">
+          <div class="report-total">
+            <span class="report-label">Total Geral:</span>
+            <span id="report-total-amount" class="report-value">R$ 0,00</span>
+          </div>
+          <table id="ranking-table" class="ranking-table">
+            <thead>
+              <tr>
+                <th>Membro</th>
+                <th>Nº Entradas</th>
+                <th>Total (R$)</th>
+                <th>Última Entrada</th>
+              </tr>
+            </thead>
+            <tbody id="ranking-body"></tbody>
+          </table>
+          <!-- Monthly controls: reset and restore -->
+          <div class="month-controls">
+            <h3>Controle de Mês</h3>
+            <button id="reset-month-btn" class="submit-btn danger-btn">Zerar Mês Atual</button>
+            <div class="restore-month-wrapper">
+              <label for="month-select">Restaurar mês:</label>
+              <select id="month-select"></select>
+              <button id="restore-month-btn" class="submit-btn">Restaurar</button>
+            </div>
+            <p id="month-message" class="admin-message"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Participantes section -->
+      <div id="participantes-section" class="admin-section" style="display:none;">
+        <h2>Participantes</h2>
+        <p>Gerencie as pessoas com entradas individuais.</p>
+        <div id="participants-container"></div>
+        <p id="participants-message" class="admin-message"></p>
+      </div>
+
+      <!-- Configurações section -->
+      <div id="configuracoes-section" class="admin-section" style="display:none;">
+        <h2>Configurações</h2>
+        <p>Faça upload de uma nova imagem de fundo (hero) para o site.</p>
+        <div class="config-form">
+          <div class="form-group">
+            <label for="hero-upload">Imagem de fundo (jpeg/png):</label>
+            <input type="file" id="hero-upload" accept="image/*">
+          </div>
+          <button id="upload-hero-btn" class="submit-btn">Enviar</button>
+          <p id="config-message" class="admin-message"></p>
+        </div>
+        <hr>
+        <div id="password-change-container" style="display:none;">
+          <h3>Alterar senha da Esther</h3>
+          <p>Somente a administradora mestre pode alterar sua própria senha.</p>
+          <div class="form-group">
+            <label for="new-password">Nova senha:</label>
+            <input type="password" id="new-password" placeholder="Nova senha">
+          </div>
+          <button id="update-password-btn" class="submit-btn">Atualizar Senha</button>
+          <p id="password-message" class="admin-message"></p>
+        </div>
+      </div>
+
+      <!-- Logs section -->
+      <div id="logs-section" class="admin-section" style="display:none;">
+        <h2>Logs</h2>
+        <p>Registro das ações realizadas no sistema.</p>
+        <div class="logs-container">
+          <table id="logs-table" class="ranking-table">
+            <thead>
+              <tr>
+                <th>Data/Hora</th>
+                <th>Administrador</th>
+                <th>Ação</th>
+                <th>Detalhes</th>
+              </tr>
+            </thead>
+            <tbody id="logs-body"></tbody>
+          </table>
+          <button id="clear-logs-btn" class="submit-btn danger-btn" style="display:none;">Limpar Logs</button>
+          <p id="logs-message" class="admin-message"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para edição de horários das entradas -->
+  <div id="entry-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Editar horários das entradas</h3>
+      <div id="entry-list"></div>
+      <button id="close-entry-modal" class="submit-btn">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    // Remove default password-based access and implement registration/login via server
+    let currentAdmin = null;
+    let isMaster = false;
+    const loginBtn = document.getElementById('login-btn');
+    const registerBtn = document.getElementById('register-btn');
+    const nameInput = document.getElementById('name-input');
+    const passwordInput = document.getElementById('password-input');
+    const loginContainer = document.getElementById('login-container');
+    const adminContent = document.getElementById('admin-content');
+    const loginMessage = document.getElementById('login-message');
+    const passwordChangeContainer = document.getElementById('password-change-container');
+    const newPasswordInput = document.getElementById('new-password');
+    const updatePasswordBtn = document.getElementById('update-password-btn');
+    const passwordMessage = document.getElementById('password-message');
+
+    // Helper to show admin content after successful login
+    function showAdminPanel() {
+      loginContainer.style.display = 'none';
+      adminContent.style.display = 'block';
+      // Show password change section if master and admin is Esther
+      if (isMaster && currentAdmin && currentAdmin.trim().normalize('NFD').replace(/\s+/g, '').toLowerCase() === 'esther') {
+        passwordChangeContainer.style.display = 'block';
+      } else {
+        passwordChangeContainer.style.display = 'none';
+      }
+      // Load data
+      loadTeam();
+      loadParticipants();
+      loadHistory();
+      loadLogs();
+      // Setup real-time ranking listener when logged in
+      setupReportsListener();
+    }
+
+    // Login handler: sends credentials to server and processes response
+    loginBtn.addEventListener('click', async () => {
+      const nameVal = (nameInput.value || '').trim();
+      const passVal = (passwordInput.value || '').trim();
+      if (!nameVal || !passVal) {
+        loginMessage.textContent = 'Informe seu nome e senha.';
+        setTimeout(() => (loginMessage.textContent = ''), 3000);
+        return;
+      }
+      try {
+        const resp = await fetch(`/login?name=${encodeURIComponent(nameVal)}&password=${encodeURIComponent(passVal)}`, { method: 'POST' });
+        const data = await resp.json();
+        if (!resp.ok) {
+          loginMessage.textContent = data.error || 'Falha ao fazer login.';
+          setTimeout(() => (loginMessage.textContent = ''), 4000);
+          return;
+        }
+        currentAdmin = data.user.name;
+        isMaster = data.user.isMaster;
+        showAdminPanel();
+      } catch (err) {
+        loginMessage.textContent = 'Erro de comunicação com o servidor.';
+        setTimeout(() => (loginMessage.textContent = ''), 4000);
+      }
+    });
+
+    // Registration handler: create a new administrator account (non-master)
+    registerBtn.addEventListener('click', async () => {
+      const nameVal = (nameInput.value || '').trim();
+      const passVal = (passwordInput.value || '').trim();
+      if (!nameVal || !passVal) {
+        loginMessage.textContent = 'Informe seu nome e senha para registrar.';
+        setTimeout(() => (loginMessage.textContent = ''), 4000);
+        return;
+      }
+      try {
+        const resp = await fetch(`/register?name=${encodeURIComponent(nameVal)}&password=${encodeURIComponent(passVal)}`, { method: 'POST' });
+        const data = await resp.json();
+        if (!resp.ok) {
+          loginMessage.textContent = data.error || 'Falha ao registrar.';
+          setTimeout(() => (loginMessage.textContent = ''), 4000);
+          return;
+        }
+        loginMessage.textContent = 'Registrado com sucesso! Agora faça login.';
+        setTimeout(() => (loginMessage.textContent = ''), 4000);
+      } catch (err) {
+        loginMessage.textContent = 'Erro de comunicação com o servidor.';
+        setTimeout(() => (loginMessage.textContent = ''), 4000);
+      }
+    });
+
+    // Handle updating the master password (only visible when isMaster and admin is Esther)
+    if (updatePasswordBtn) {
+      updatePasswordBtn.addEventListener('click', async () => {
+        const newPass = (newPasswordInput.value || '').trim();
+        if (!newPass) {
+          passwordMessage.textContent = 'Informe a nova senha.';
+          setTimeout(() => (passwordMessage.textContent = ''), 3000);
+          return;
+        }
+        try {
+          const resp = await fetch(`/change-password?admin=${encodeURIComponent(currentAdmin)}&newPassword=${encodeURIComponent(newPass)}`, { method: 'PUT' });
+          const data = await resp.json();
+          if (!resp.ok) {
+            passwordMessage.textContent = data.error || 'Falha ao alterar senha.';
+            setTimeout(() => (passwordMessage.textContent = ''), 4000);
+            return;
+          }
+          passwordMessage.textContent = 'Senha alterada com sucesso!';
+          newPasswordInput.value = '';
+          setTimeout(() => (passwordMessage.textContent = ''), 4000);
+        } catch (err) {
+          passwordMessage.textContent = 'Erro de comunicação com o servidor.';
+          setTimeout(() => (passwordMessage.textContent = ''), 4000);
+        }
+      });
+    }
+
+    // Tab navigation
+    const menuButtons = document.querySelectorAll('.menu-btn');
+    menuButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        // Update active class
+        menuButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const section = btn.getAttribute('data-section');
+        // Hide all sections
+        document.querySelectorAll('.admin-section').forEach((sec) => {
+          sec.style.display = 'none';
+        });
+        // Show selected section
+        const target = document.getElementById(`${section}-section`);
+        if (target) {
+          target.style.display = 'block';
+        }
+        // If switching to logs, reload logs
+        if (section === 'logs') loadLogs();
+        // If switching to relatorios, ensure ranking listener active
+        if (section === 'relatorios') setupReportsListener();
+        // If switching to participantes, reload participants
+        if (section === 'participantes') loadParticipants();
+        // If switching to equipe, reload team
+        if (section === 'equipe') loadTeam();
+        // If switching to configuracoes, nothing special
+      });
+    });
+
+    // Handle submission of the deposit form
+    const submitBtn = document.getElementById('submit-btn');
+    const adminMessage = document.getElementById('admin-message');
+    submitBtn.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const user = document.getElementById('user').value.trim();
+      const value = parseFloat(document.getElementById('value').value);
+      if (!user || isNaN(value)) {
+        adminMessage.textContent = 'Por favor, preencha os campos corretamente.';
+        return;
+      }
+      try {
+        const url = `/add/${encodeURIComponent(value)}?user=${encodeURIComponent(user)}&admin=${encodeURIComponent(currentAdmin)}`;
+        const response = await fetch(url);
+        if (response.ok) {
+          adminMessage.textContent = 'Entrada registrada com sucesso!';
+          document.getElementById('user').value = '';
+          document.getElementById('value').value = '';
+          // Reload participants list
+          loadParticipants();
+        } else {
+          const data = await response.json();
+          adminMessage.textContent = data.error || 'Ocorreu um erro ao registrar a entrada.';
+        }
+      } catch (err) {
+        adminMessage.textContent = 'Erro na comunicação com o servidor.';
+      }
+      setTimeout(() => {
+        adminMessage.textContent = '';
+      }, 4000);
+    });
+
+    // Functions for team management
+    async function loadTeam() {
+      try {
+        const res = await fetch('/team');
+        if (res.ok) {
+          const team = await res.json();
+          renderTeamAdmin(team);
+        }
+      } catch (err) {
+        console.error('Erro ao carregar equipe', err);
+      }
+    }
+
+    function renderTeamAdmin(team) {
+      const container = document.getElementById('team-admin-container');
+      container.innerHTML = '';
+      team.forEach((member) => {
+        const row = document.createElement('div');
+        row.classList.add('team-admin-row');
+        // Name input
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.value = member.name;
+        nameInput.classList.add('team-input');
+        // Desc input
+        const descInput = document.createElement('input');
+        descInput.type = 'text';
+        descInput.value = member.description || '';
+        descInput.classList.add('team-input');
+        // Save button
+        const saveBtn = document.createElement('button');
+        saveBtn.innerText = 'Salvar';
+        saveBtn.classList.add('team-save-btn');
+        saveBtn.addEventListener('click', async () => {
+          const nameVal = nameInput.value.trim();
+          const descVal = descInput.value.trim();
+          try {
+            const resp = await fetch(`/team/${member.id}?name=${encodeURIComponent(nameVal)}&description=${encodeURIComponent(descVal)}&admin=${encodeURIComponent(currentAdmin)}`, {
+              method: 'PUT'
+            });
+            if (resp.ok) {
+              loadTeam();
+            }
+          } catch (err) {
+            console.error('Erro ao salvar membro', err);
+          }
+        });
+        // Delete button
+        const delBtn = document.createElement('button');
+        delBtn.innerText = 'Remover';
+        delBtn.classList.add('team-delete-btn');
+        delBtn.addEventListener('click', async () => {
+          if (!confirm(`Tem certeza que deseja remover ${member.name}?`)) return;
+          try {
+            const resp = await fetch(`/team/${member.id}?admin=${encodeURIComponent(currentAdmin)}`, { method: 'DELETE' });
+            if (resp.ok) {
+              loadTeam();
+            }
+          } catch (err) {
+            console.error('Erro ao remover membro', err);
+          }
+        });
+        row.appendChild(nameInput);
+        row.appendChild(descInput);
+        row.appendChild(saveBtn);
+        row.appendChild(delBtn);
+        container.appendChild(row);
+      });
+    }
+
+    // Handle adding a new member
+    const addBtn = document.getElementById('add-member-btn');
+    const newNameInput = document.getElementById('new-name');
+    const newDescInput = document.getElementById('new-desc');
+    const teamMessage = document.getElementById('team-message');
+    addBtn.addEventListener('click', async () => {
+      const nameVal = newNameInput.value.trim();
+      const descVal = newDescInput.value.trim();
+      if (!nameVal) {
+        teamMessage.textContent = 'Informe o nome do membro';
+        setTimeout(() => (teamMessage.textContent = ''), 3000);
+        return;
+      }
+      try {
+        const resp = await fetch(`/team?name=${encodeURIComponent(nameVal)}&description=${encodeURIComponent(descVal)}&admin=${encodeURIComponent(currentAdmin)}`, {
+          method: 'POST'
+        });
+        const data = await resp.json();
+        if (resp.ok) {
+          teamMessage.textContent = 'Membro adicionado!';
+          newNameInput.value = '';
+          newDescInput.value = '';
+          loadTeam();
+        } else {
+          teamMessage.textContent = data.error || 'Erro ao adicionar';
+        }
+      } catch (err) {
+        teamMessage.textContent = 'Erro ao comunicar com servidor';
+      }
+      setTimeout(() => (teamMessage.textContent = ''), 4000);
+    });
+
+    /**
+     * Real-time reports: set up an EventSource connection to /events
+     * to receive live updates of deposits. Computes the total value and
+     * ranking per member and renders the table in the Relatórios section.
+     */
+    function setupReportsListener() {
+      // If EventSource already exists, do not create another
+      if (window.adminEventSource) return;
+      const src = new EventSource('/events');
+      window.adminEventSource = src;
+      src.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          // Update total general amount
+          if (data.totalValues) {
+            const totalSum = data.totalValues.reduce((sum, v) => sum + v, 0);
+            const totalEl = document.getElementById('report-total-amount');
+            if (totalEl) {
+              totalEl.innerText = `R$ ${totalSum.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            }
+          }
+          // Build ranking array from user data
+          if (data.users) {
+            const ranking = [];
+            Object.keys(data.users).forEach((name) => {
+              const user = data.users[name];
+              const values = user.values || [];
+              const total = values.reduce((acc, v) => acc + v, 0);
+              const count = values.length;
+              const lastLabel = user.labels && user.labels.length > 0 ? user.labels[user.labels.length - 1] : '-';
+              ranking.push({ name, total, count, last: lastLabel });
+            });
+            ranking.sort((a, b) => b.total - a.total);
+            // Render ranking table
+            const tbody = document.getElementById('ranking-body');
+            if (tbody) {
+              tbody.innerHTML = '';
+              ranking.forEach((item) => {
+                const row = document.createElement('tr');
+                const tdName = document.createElement('td');
+                tdName.innerText = item.name;
+                const tdCount = document.createElement('td');
+                tdCount.innerText = item.count.toString();
+                const tdTotal = document.createElement('td');
+                tdTotal.innerText = `R$ ${item.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                const tdLast = document.createElement('td');
+                tdLast.innerText = item.last;
+                row.appendChild(tdName);
+                row.appendChild(tdCount);
+                row.appendChild(tdTotal);
+                row.appendChild(tdLast);
+                tbody.appendChild(row);
+              });
+            }
+          }
+        } catch (err) {
+          console.error('Erro ao processar dados de relatório', err);
+        }
+      };
+    }
+
+    /**
+     * Load list of participants from the server and render the management table.
+     */
+    async function loadParticipants() {
+      try {
+        const res = await fetch('/participants');
+        if (!res.ok) return;
+        const data = await res.json();
+        renderParticipants(data);
+      } catch (err) {
+        console.error('Erro ao carregar participantes', err);
+      }
+    }
+
+    /**
+     * Renders the participants list with remove buttons.
+     */
+    function renderParticipants(data) {
+      const container = document.getElementById('participants-container');
+      if (!container) return;
+      container.innerHTML = '';
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p>Nenhum participante registrado.</p>';
+        return;
+      }
+      data.forEach((item) => {
+        const row = document.createElement('div');
+        row.classList.add('participants-row');
+        // Name (editable input)
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.value = item.name;
+        nameInput.classList.add('team-input');
+        // Count
+        const countEl = document.createElement('div');
+        countEl.textContent = `${item.count} entradas`;
+        // Total
+        const totalEl = document.createElement('div');
+        totalEl.textContent = `R$ ${item.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+        // Save button for renaming
+        const saveBtn = document.createElement('button');
+        saveBtn.innerText = 'Salvar';
+        saveBtn.classList.add('team-save-btn');
+        saveBtn.addEventListener('click', async () => {
+          const newName = nameInput.value.trim();
+          if (!newName || newName === item.name) return;
+          try {
+            const resp = await fetch(`/users/${encodeURIComponent(item.id)}?admin=${encodeURIComponent(currentAdmin)}&newName=${encodeURIComponent(newName)}`, { method: 'PUT' });
+            const data = await resp.json();
+            if (resp.ok) {
+              loadParticipants();
+              loadTeam();
+            } else {
+              alert(data.error || 'Erro ao renomear participante');
+            }
+          } catch (err) {
+            console.error('Erro ao renomear participante', err);
+          }
+        });
+        // Remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.innerText = 'Remover';
+        removeBtn.classList.add('team-delete-btn');
+        removeBtn.addEventListener('click', async () => {
+          if (!confirm(`Remover participante ${item.name}?`)) return;
+          try {
+            const resp = await fetch(`/users/${encodeURIComponent(item.id)}?admin=${encodeURIComponent(currentAdmin)}`, { method: 'DELETE' });
+            if (resp.ok) {
+              loadParticipants();
+            }
+          } catch (err) {
+            console.error('Erro ao remover participante', err);
+          }
+        });
+        row.appendChild(nameInput);
+        row.appendChild(countEl);
+        row.appendChild(totalEl);
+        row.appendChild(saveBtn);
+        row.appendChild(removeBtn);
+        // Edit entries button: allows editing of timestamps for this participant
+        const editBtn = document.createElement('button');
+        editBtn.innerText = 'Editar horários';
+        editBtn.classList.add('team-edit-btn');
+        editBtn.addEventListener('click', () => {
+          openEntryEditModal(item.name);
+        });
+        row.appendChild(editBtn);
+        container.appendChild(row);
+      });
+    }
+
+    /**
+     * Load month history options for restore.
+     */
+    async function loadHistory() {
+      try {
+        const res = await fetch('/history');
+        if (!res.ok) return;
+        const data = await res.json();
+        const select = document.getElementById('month-select');
+        if (!select) return;
+        select.innerHTML = '';
+        data.months.forEach((m) => {
+          const option = document.createElement('option');
+          option.value = m;
+          option.innerText = m;
+          select.appendChild(option);
+        });
+      } catch (err) {
+        console.error('Erro ao carregar meses', err);
+      }
+    }
+
+    /**
+     * Abre o modal de edição de horários para as entradas de um participante.
+     * Busca as entradas no servidor e cria inputs para editar a data/hora.
+     * @param {string} userName - Nome do participante cujas entradas devem ser editadas
+     */
+    async function openEntryEditModal(userName) {
+      const modal = document.getElementById('entry-modal');
+      const list = document.getElementById('entry-list');
+      if (!modal || !list) return;
+      // Limpa lista antes de carregar
+      list.innerHTML = '';
+      try {
+        const res = await fetch(`/entries?user=${encodeURIComponent(userName)}`);
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || 'Erro ao obter entradas');
+          return;
+        }
+        if (!data.entries || data.entries.length === 0) {
+          const noEntries = document.createElement('p');
+          noEntries.textContent = 'Nenhuma entrada encontrada.';
+          list.appendChild(noEntries);
+        } else {
+          data.entries.forEach((entry) => {
+            const row = document.createElement('div');
+            row.classList.add('entry-edit-row');
+            // Valor (não editável)
+            const valueEl = document.createElement('span');
+            valueEl.textContent = `Valor: R$ ${entry.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+            valueEl.classList.add('entry-value');
+            // Input para nova data/hora
+            const input = document.createElement('input');
+            input.type = 'datetime-local';
+            input.classList.add('entry-input');
+            // Converter o formato dd/mm/yyyy HH:MM:SS para yyyy-MM-ddTHH:MM
+            const parts = entry.time.split(' ');
+            if (parts.length === 2) {
+              const [datePart, timePart] = parts;
+              const [day, month, year] = datePart.split('/');
+              const [hour, minute] = timePart.split(':');
+              // Compose ISO-like string; seconds not included but not required for datetime-local
+              input.value = `${year}-${month}-${day}T${hour}:${minute}`;
+            }
+            // Botão de salvar
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = 'Salvar';
+            saveBtn.classList.add('entry-save-btn');
+            saveBtn.addEventListener('click', async () => {
+              const isoVal = input.value;
+              if (!isoVal) {
+                alert('Por favor, informe uma data e hora válidas');
+                return;
+              }
+              // Converter o valor ISO (yyyy-MM-ddTHH:MM) para formato pt-BR dd/mm/yyyy HH:MM:SS
+              const dt = new Date(isoVal);
+              const newTime = dt.toLocaleString('pt-BR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+              });
+              try {
+                const resp = await fetch(
+                  `/entry?user=${encodeURIComponent(userName)}&index=${encodeURIComponent(entry.index)}&newTime=${encodeURIComponent(newTime)}&admin=${encodeURIComponent(currentAdmin)}`,
+                  { method: 'PUT' }
+                );
+                const respData = await resp.json();
+                if (!resp.ok) {
+                  alert(respData.error || 'Erro ao atualizar horário');
+                  return;
+                }
+                // Atualiza valor localmente e recarrega dados principais
+                loadParticipants();
+                loadHistory();
+                setupReportsListener();
+                alert('Horário atualizado com sucesso!');
+              } catch (err) {
+                alert('Erro de comunicação com o servidor.');
+              }
+            });
+            row.appendChild(valueEl);
+            row.appendChild(input);
+            row.appendChild(saveBtn);
+            list.appendChild(row);
+          });
+        }
+        // Exibe modal
+        modal.style.display = 'flex';
+      } catch (err) {
+        alert('Erro ao carregar entradas');
+      }
+    }
+
+    // Fechar modal de edição de entradas
+    const closeEntryModalBtn = document.getElementById('close-entry-modal');
+    if (closeEntryModalBtn) {
+      closeEntryModalBtn.addEventListener('click', () => {
+        const modal = document.getElementById('entry-modal');
+        if (modal) modal.style.display = 'none';
+      });
+    }
+
+    // Attach handlers for month controls
+    const resetBtn = document.getElementById('reset-month-btn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', async () => {
+        if (!confirm('Tem certeza que deseja zerar o mês atual?')) return;
+        try {
+          const resp = await fetch(`/reset-month?admin=${encodeURIComponent(currentAdmin)}`, { method: 'POST' });
+          const data = await resp.json();
+          const msgEl = document.getElementById('month-message');
+          msgEl.textContent = data.message || (resp.ok ? 'Mês resetado!' : 'Erro ao resetar.');
+          loadHistory();
+          loadParticipants();
+          loadTeam();
+          setTimeout(() => (msgEl.textContent = ''), 4000);
+        } catch (err) {
+          console.error('Erro ao resetar mês', err);
+        }
+      });
+    }
+    const restoreBtn = document.getElementById('restore-month-btn');
+    if (restoreBtn) {
+      restoreBtn.addEventListener('click', async () => {
+        const select = document.getElementById('month-select');
+        const month = select ? select.value : '';
+        if (!month) return;
+        if (!confirm(`Restaurar dados do mês ${month}?`)) return;
+        try {
+          const resp = await fetch(`/restore-month?month=${encodeURIComponent(month)}&admin=${encodeURIComponent(currentAdmin)}`, { method: 'POST' });
+          const data = await resp.json();
+          const msgEl = document.getElementById('month-message');
+          msgEl.textContent = data.message || (resp.ok ? 'Mês restaurado!' : 'Erro ao restaurar.');
+          // Reload lists after restore
+          loadParticipants();
+          loadTeam();
+          loadHistory();
+          setTimeout(() => (msgEl.textContent = ''), 4000);
+        } catch (err) {
+          console.error('Erro ao restaurar mês', err);
+        }
+      });
+    }
+
+    /**
+     * Load and render logs. Only master can clear logs.
+     */
+    async function loadLogs() {
+      try {
+        const res = await fetch('/logs');
+        if (!res.ok) return;
+        const data = await res.json();
+        const tbody = document.getElementById('logs-body');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        data.forEach((log) => {
+          const row = document.createElement('tr');
+          const tdTime = document.createElement('td');
+          tdTime.innerText = new Date(log.timestamp).toLocaleString('pt-BR', { hour12: false });
+          const tdAdmin = document.createElement('td');
+          tdAdmin.innerText = log.admin;
+          const tdAction = document.createElement('td');
+          tdAction.innerText = log.action;
+          const tdDetails = document.createElement('td');
+          tdDetails.innerText = typeof log.details === 'object' ? JSON.stringify(log.details) : log.details;
+          row.appendChild(tdTime);
+          row.appendChild(tdAdmin);
+          row.appendChild(tdAction);
+          row.appendChild(tdDetails);
+          tbody.appendChild(row);
+        });
+        // Show or hide clear logs button based on admin privileges
+        const clearBtn = document.getElementById('clear-logs-btn');
+        if (clearBtn) {
+          clearBtn.style.display = isMaster ? 'inline-block' : 'none';
+        }
+      } catch (err) {
+        console.error('Erro ao carregar logs', err);
+      }
+    }
+
+    const clearLogsBtn = document.getElementById('clear-logs-btn');
+    if (clearLogsBtn) {
+      clearLogsBtn.addEventListener('click', async () => {
+        if (!confirm('Tem certeza que deseja apagar todos os logs?')) return;
+        try {
+          const resp = await fetch(`/logs?admin=${encodeURIComponent(currentAdmin)}`, { method: 'DELETE' });
+          const data = await resp.json();
+          const msgEl = document.getElementById('logs-message');
+          msgEl.textContent = data.message || (resp.ok ? 'Logs apagados.' : 'Erro ao apagar logs.');
+          loadLogs();
+          setTimeout(() => (msgEl.textContent = ''), 4000);
+        } catch (err) {
+          console.error('Erro ao limpar logs', err);
+        }
+      });
+    }
+
+    /**
+     * Handle hero image upload.
+     */
+    const uploadBtn = document.getElementById('upload-hero-btn');
+    const heroInput = document.getElementById('hero-upload');
+    if (uploadBtn && heroInput) {
+      uploadBtn.addEventListener('click', async () => {
+        const file = heroInput.files && heroInput.files[0];
+        if (!file) {
+          const msgEl = document.getElementById('config-message');
+          msgEl.textContent = 'Selecione um arquivo de imagem.';
+          setTimeout(() => (msgEl.textContent = ''), 3000);
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const base64 = reader.result;
+          try {
+            const resp = await fetch(`/upload-hero?admin=${encodeURIComponent(currentAdmin)}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ data: base64 })
+            });
+            const data = await resp.json();
+            const msgEl = document.getElementById('config-message');
+            msgEl.textContent = data.message || (resp.ok ? 'Imagem atualizada!' : 'Erro ao enviar imagem.');
+            setTimeout(() => (msgEl.textContent = ''), 4000);
+          } catch (err) {
+            console.error('Erro ao fazer upload de imagem', err);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  </script>
+</body>
+</html>
