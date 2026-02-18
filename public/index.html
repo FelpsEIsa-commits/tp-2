@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP — Cripto &amp; Gestão de Carteira</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Import Chart.js via CDN for rendering the line chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Blurred moving blobs background -->
+  <div class="blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <div class="blob blob4"></div>
+    <div class="blob blob5"></div>
+  </div>
+
+  <!-- Small floating bubbles for subtle background animation -->
+  <div class="mini-blobs">
+    <!-- Generate multiple mini bubbles; the positions and animations are defined in CSS -->
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+    <span class="mini-blob"></span>
+  </div>
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <img src="assets/hero.jpg" alt="TP Hero" class="hero-image">
+    <div class="hero-content">
+      <h1>TP — Gestão de Criptos com Disciplina</h1>
+      <p>Disciplina, visão de longo prazo e crescimento coletivo.</p>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Section describing the organisation -->
+    <section class="about">
+      <h2>Quem somos</h2>
+      <p>
+        A TP é uma organização voltada para a gestão de portfólios em criptomoedas. Com CNPJ, 
+        processos estruturados e equipes definidas, buscamos credibilidade e solidez no mercado
+        financeiro digital. Nossa missão é executar estratégias com disciplina e visão de longo prazo,
+        sem falsas promessas.
+      </p>
+    </section>
+
+    <!-- Real-time chart section -->
+    <section class="chart-section">
+      <h2 id="chart-title">Evolução da Carteira</h2>
+      <div class="total-container">
+        <span class="total-label">Total acumulado:</span>
+        <span id="total-amount" class="total-amount">R$ 0,00</span>
+      </div>
+      <canvas id="realtime-chart" width="400" height="200"></canvas>
+      <p class="chart-description">
+        Este gráfico apresenta o valor acumulado das entradas na carteira da TP ao longo do tempo.
+        As atualizações ocorrem em tempo real para todos os participantes.
+      </p>
+    </section>
+
+    <!-- Mini charts for individual members -->
+    <section class="mini-charts">
+      <h2>Entradas Individuais</h2>
+      <div class="mini-grid">
+        <!-- Mini chart for Felps -->
+        <div class="mini-chart-card">
+          <h3>Felps</h3>
+          <canvas id="chart-Felps"></canvas>
+        </div>
+        <!-- Mini chart for Matheus França -->
+        <div class="mini-chart-card">
+          <h3>Matheus França</h3>
+          <canvas id="chart-Matheus_Franca"></canvas>
+        </div>
+        <!-- Mini chart for Lia -->
+        <div class="mini-chart-card">
+          <h3>Lia</h3>
+          <canvas id="chart-Lia"></canvas>
+        </div>
+        <!-- Mini chart for Yuki -->
+        <div class="mini-chart-card">
+          <h3>Yuki</h3>
+          <canvas id="chart-Yuki"></canvas>
+        </div>
+        <!-- Mini chart for Yoon -->
+        <div class="mini-chart-card">
+          <h3>Yoon</h3>
+          <canvas id="chart-Yoon"></canvas>
+        </div>
+        <!-- Mini chart for Murilo -->
+        <div class="mini-chart-card">
+          <h3>Murilo</h3>
+          <canvas id="chart-Murilo"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team information (dynamically populated) -->
+    <section class="team">
+      <h2>Nossa Equipe</h2>
+      <div id="team-grid" class="team-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 TP. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Detail modal for individual user graphs -->
+  <div id="modal-overlay" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <button class="close-btn" id="close-modal">×</button>
+      <h2 id="detail-title">Detalhes</h2>
+      <div class="detail-chart-container">
+        <canvas id="detail-chart"></canvas>
+      </div>
+      <p id="detail-total" class="detail-total"></p>
+      <div class="detail-table-wrapper">
+        <table id="detail-table" class="detail-table">
+          <thead>
+            <tr><th>Horário</th><th>Valor (R$)</th></tr>
+          </thead>
+          <tbody id="detail-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
