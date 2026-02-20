@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lú Perfumaria & Variedades</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0b" />
+  <meta name="description" content="Lú Perfumaria & Variedades — vitrine premium com animações e presença de marca." />
+
+  <!-- [Equipe da Esther | Dev #01] Marca JS ativa cedo para evitar flicker do reveal -->
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+
+  <!-- [Equipe da Esther | Dev #02] Fontes da marca -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- [Equipe da Esther | Dev #03] CSS principal -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body id="top">
+
+  <!-- [Equipe da Esther | Dev #04] Loader cinematográfico -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader-logo">LÚ</div>
+    <div class="loader-sub">Perfumaria & Variedades</div>
+    <div class="loader-bar"></div>
+  </div>
+
+  <!-- [Equipe da Esther | Dev #05] Barra de progresso do scroll -->
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- [Equipe da Esther | Dev #06] CTA flutuante WhatsApp -->
+  <a class="fab" href="https://wa.me/555189477173" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <span>WhatsApp</span>
+  </a>
+
+  <!-- [Equipe da Esther | Dev #07] Header fixo com menu + botão mobile -->
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" data-scroll aria-label="Voltar ao topo">
+        <img src="Lú (1).png" class="logo" alt="Lú Perfumaria" />
+      </a>
+
+      <nav class="menu" aria-label="Menu principal">
+        <a href="#manifesto" data-scroll>Manifesto</a>
+        <a href="#quem" data-scroll>Quem é a Lú</a>
+        <a href="#vende" data-scroll>O que vende</a>
+        <a href="#categorias" data-scroll>Categorias</a>
+        <a href="#contato" data-scroll>Contato</a>
+      </nav>
+
+      <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- [Equipe da Esther | Dev #08] Drawer mobile -->
+    <div class="drawer" aria-hidden="true">
+      <div class="drawer-inner">
+        <a class="drawer-link" href="#manifesto" data-scroll>Manifesto</a>
+        <a class="drawer-link" href="#quem" data-scroll>Quem é a Lú</a>
+        <a class="drawer-link" href="#vende" data-scroll>O que vende</a>
+        <a class="drawer-link" href="#categorias" data-scroll>Categorias</a>
+        <a class="drawer-link" href="#contato" data-scroll>Contato</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =========================
+         HERO
+    ========================== -->
+    <section class="hero" aria-label="Abertura">
+      <div class="bg-grid" aria-hidden="true"></div>
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <div class="blob blob-2" aria-hidden="true"></div>
+      <div class="blob blob-3" aria-hidden="true"></div>
+
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <div class="pill reveal">
+            <span class="dot"></span>
+            Loja de Perfumaria & Variedades
+          </div>
+
+          <!-- [Equipe da Esther | Dev #09] Headline split por palavras (corrigido) -->
+          <h1 class="headline split-target" data-split="words">
+            Beleza. Estilo. Confiança.
+          </h1>
+
+          <p class="subhead reveal">
+            Uma vitrine premium — com animações e presença de marca grande.
+          </p>
+
+          <div class="hero-actions reveal">
+            <a href="#categorias" class="cta" data-scroll>Explorar a loja</a>
+            <a href="#contato" class="cta ghost" data-scroll>Contato rápido</a>
+          </div>
+
+          <div class="trust reveal">
+            <span class="trust-item">✨ Atendimento com carinho</span>
+            <span class="trust-item">💎 Curadoria de qualidade</span>
+            <span class="trust-item">📦 Organização & confiança</span>
+          </div>
+        </div>
+
+        <div class="hero-card reveal" aria-label="Destaque da marca">
+          <div class="hero-card-top">
+            <div class="hero-badge">Assinatura da marca</div>
+            <div class="hero-mini-title">Lú Perfumaria & Variedades</div>
+          </div>
+
+          <div class="hero-card-mid">
+            <p>
+              Site com visual de marca grande — pronto pra inserir produtos depois,
+              sem parecer amador.
+            </p>
+          </div>
+
+          <div class="hero-card-bottom">
+            <div class="stat">
+              <span class="stat-num">36+</span>
+              <span class="stat-label">anos de carreira</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">14</span>
+              <span class="stat-label">começou cedo</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">POA</span>
+              <span class="stat-label">Porto Alegre</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- [Equipe da Esther | Dev #10] Marquee Nike-like -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>PERFUMARIA • VARIEDADES • PRESENTES • RELÓGIOS • BIJUTERIAS • </span>
+          <span>PERFUMARIA • VARIEDADES • PRESENTES • RELÓGIOS • BIJUTERIAS • </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         MANIFESTO (PIN + SCRUB)
+    ========================== -->
+    <section id="manifesto" class="manifesto" aria-label="Manifesto">
+      <div class="container">
+        <div class="manifesto-inner">
+          <p class="manifesto-kicker reveal">MANIFESTO</p>
+
+          <!-- [Equipe da Esther | Dev #11] Split corrigido para não colar letras -->
+          <h2 class="manifesto-title split-target" data-split="words">
+            Vender bem é cuidar. Cuidar é fazer com verdade.
+          </h2>
+
+          <p class="manifesto-text reveal">
+            A Lú construiu uma clientela com simpatia, carisma e honra.
+            Este site é a vitrine dessa história — forte, moderna e inesquecível.
+          </p>
+
+          <div class="manifesto-cta reveal">
+            <a class="cta" href="#quem" data-scroll>Conhecer a história</a>
+            <a class="cta ghost" href="#contato" data-scroll>Falar agora</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         QUEM É A LÚ (BIO REAL)
+    ========================== -->
+    <section id="quem" class="section" aria-label="Quem é a Lú">
+      <div class="container">
+        <div class="split-layout">
+          <div class="left">
+            <h2 class="section-title reveal split-target" data-split="words">Quem é a Lú</h2>
+
+            <p class="section-text reveal">
+              Nascida no dia <strong>25 de Abril de 1976</strong> em <strong>Porto Alegre</strong>, no bairro
+              <strong>Teresópolis</strong>. Filha de uma família de classe-baixa, começou sua carreira de vendas
+              aos <strong>14 anos</strong> no <strong>Centro-histórico de Porto Alegre</strong>.
+            </p>
+
+            <p class="section-text reveal">
+              Se destacou por sua <strong>simpatia</strong> e <strong>carisma</strong>, conquistando uma clientela de anos
+              de lealdade. Há mais de <strong>36 anos</strong> de carreira, sempre trabalhando com
+              <strong>honestidade</strong> e <strong>honra</strong>.
+            </p>
+
+            <div class="timeline reveal">
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <span class="tl-year">14 anos</span>
+                  <p>Começa nas vendas no Centro Histórico de Porto Alegre.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <span class="tl-year">Carisma</span>
+                  <p>Constrói clientela fiel com atendimento humano e presença.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <span class="tl-year">36+ anos</span>
+                  <p>Trabalho de honra, confiança e relacionamento.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="right">
+            <div class="profile-card reveal" aria-label="Cartão da Lú">
+              <div class="profile-top">
+                <div class="profile-badge">HISTÓRIA REAL</div>
+                <h3>Lú</h3>
+                <p class="muted">Perfumaria & Variedades</p>
+              </div>
+
+              <div class="profile-mid">
+                <div class="profile-chip">📍 Porto Alegre • Teresópolis</div>
+                <div class="profile-chip">🗓️ 25/04/1976</div>
+                <div class="profile-chip">⭐ 36+ anos de carreira</div>
+              </div>
+
+              <div class="profile-bottom">
+                <a class="cta small" href="#contato" data-scroll>Contato</a>
+                <a class="cta small ghost" href="#vende" data-scroll>O que vende</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         O QUE VENDE
+    ========================== -->
+    <section id="vende" class="section dark" aria-label="O que vende">
+      <div class="container">
+        <h2 class="section-title reveal split-target" data-split="words">O que ela faz e vende</h2>
+        <p class="section-text reveal">
+          <strong>Perfumes e variedades</strong>. Seleção pensada para presente, uso diário e estilo.
+        </p>
+
+        <div class="features-grid">
+          <div class="feature reveal">
+            <div class="feature-top">
+              <span class="feature-icon">🧴</span>
+              <h3>Perfumes</h3>
+            </div>
+            <p>Opções para diferentes estilos e ocasiões.</p>
+          </div>
+
+          <div class="feature reveal">
+            <div class="feature-top">
+              <span class="feature-icon">🎁</span>
+              <h3>Presentes</h3>
+            </div>
+            <p>Ideias prontas para surpreender.</p>
+          </div>
+
+          <div class="feature reveal">
+            <div class="feature-top">
+              <span class="feature-icon">✨</span>
+              <h3>Variedades</h3>
+            </div>
+            <p>Itens selecionados para o dia a dia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         CATEGORIAS (CARDS VAZIOS)
+    ========================== -->
+    <section id="categorias" class="section" aria-label="Categorias">
+      <div class="container">
+        <h2 class="section-title reveal split-target" data-split="words">Categorias</h2>
+        <p class="section-text reveal">
+          Cards premium com luz interativa. (Sem textos — você edita depois.)
+        </p>
+
+        <!-- [Equipe da Esther | Dev #12] Cards vazios (placeholders visuais via data-placeholder) -->
+        <div class="cards">
+          <div class="card reveal card-empty" data-placeholder="Categoria 1"></div>
+          <div class="card reveal card-empty" data-placeholder="Categoria 2"></div>
+          <div class="card reveal card-empty" data-placeholder="Categoria 3"></div>
+          <div class="card reveal card-empty" data-placeholder="Categoria 4"></div>
+          <div class="card reveal card-empty" data-placeholder="Categoria 5"></div>
+          <div class="card reveal card-empty" data-placeholder="Categoria 6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         CONTATO (DESTAQUE)
+    ========================== -->
+    <section id="contato" class="contact" aria-label="Contato">
+      <div class="container contact-inner">
+        <div class="contact-left">
+          <h2 class="contact-title split-target" data-split="words">Forma de contato</h2>
+          <p class="contact-text reveal">Atendimento com carinho e resposta rápida.</p>
+
+          <div class="contact-box reveal">
+            <div class="contact-row">
+              <span class="label">WhatsApp / Telefone</span>
+              <span class="value">+55 51 8947-7173</span>
+            </div>
+
+            <div class="contact-actions">
+              <a class="cta" href="https://wa.me/555189477173" target="_blank" rel="noopener">Abrir WhatsApp</a>
+              <a class="cta ghost" href="#top" data-scroll>Voltar ao topo</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="contact-right">
+          <div class="contact-card reveal">
+            <div class="contact-badge">PRONTO PRA VENDER</div>
+            <h3>Perfumes & Variedades</h3>
+            <p>Uma vitrine premium para transformar visita em compra.</p>
+
+            <div class="contact-mini">
+              <div class="mini">
+                <span class="mini-num">36+</span>
+                <span class="mini-label">anos</span>
+              </div>
+              <div class="mini">
+                <span class="mini-num">POA</span>
+                <span class="mini-label">origem</span>
+              </div>
+              <div class="mini">
+                <span class="mini-num">100%</span>
+                <span class="mini-label">honra</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <p>© 2026 Lú Perfumaria & Variedades</p>
+
+          <!-- [Equipe da Esther | Dev #13] Crédito final solicitado -->
+          <div class="tbb-sign">
+            <span>Design & Experiência por</span>
+            <strong>Equipe da Esther</strong>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <a href="#quem" data-scroll>Quem é a Lú</a>
+          <a href="#categorias" data-scroll>Categorias</a>
+          <a href="#contato" data-scroll>Contato</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- [Equipe da Esther | Dev #14] GSAP + ScrollTrigger (ordem certa) -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <!-- [Equipe da Esther | Dev #15] Seu JS -->
+  <script src="script.js"></script>
+</body>
+</html>
